@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>QR Decryptor — Dark Modern</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+<style>
+:root{
+  --bg:#0b0f14;
+  --card:#111827cc;
+  --border:#1f2937;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+  --accent:#22c55e;
+  --info:#3b82f6;
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  padding:14px;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #1f2937 0%, transparent 40%),
+    radial-gradient(800px 400px at 90% 10%, #052e16 0%, transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+
+body > *{
+  max-width:720px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+h2{
+  text-align:center;
+  margin:10px 0 18px;
+  font-weight:600;
+}
+
+#pinDisplay{
+  font-size:3rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  text-align:center;
+  padding:16px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#052e16,#064e3b);
+  border:1px solid #064e3b;
+  color:#ecfdf5;
+  box-shadow:0 10px 40px #00000080;
+  margin-bottom:16px;
+}
+
+#video{
+  width:100%;
+  max-height:45vh;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:#000;
+  box-shadow:0 10px 30px #00000080;
+}
+
+input[type="password"]{
+  width:100%;
+  padding:12px 14px;
+  margin-top:6px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  color:var(--text);
+  backdrop-filter: blur(14px);
+}
+
+button{
+  background:#1f2937;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:12px 16px;
+  cursor:pointer;
+  transition:all .25s ease;
+}
+
+button:hover{ transform:translateY(-1px); background:#273449; }
+button:active{ transform:scale(.97); }
+button:disabled{ opacity:.5; cursor:not-allowed; }
+
+.row{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+label{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  color:var(--muted);
+  font-size:.95em;
+}
+
+#status{
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
+  background:var(--card);
+  border:1px solid var(--border);
+  white-space:pre-wrap;
+  border-left:4px solid var(--info);
+}
+
+.small{
+  font-size:.85em;
+  color:var(--muted);
+  margin-top:6px;
+}
+
+@media(max-width:520px){
+  #pinDisplay{ font-size:2.4rem; }
+  button{ width:100%; }
+}
+</style>
+</head>
+
+<body>
+<h2>QR decryptor</h2>
+
+<div id="pinDisplay">---</div>
+
+<video id="video" playsinline autoplay></video>
+
+<div class="row">
+  <button id="startBtn">Start camera</button>
+  <button id="stopBtn" disabled>Stop camera</button>
+</div>
+
+<p><strong>Şifre:</strong></p>
+<input id="pwd" type="password" placeholder="Shared password"/>
+
+<div class="row">
+  <label><input type="checkbox" id="remember"> Şifreyi kaydet</label>
+  <button id="forget">Unut</button>
+</div>
+
+<div class="small">
+  Şifre localStorage’da tutulur. Bu cihazı paylaşanlar için risklidir.
+</div>
+
+<div id="status"></div>
+
+<script src="https://unpkg.com/jsqr/dist/jsQR.js"></script>
+
+<script>
+const STORAGE_KEY='qr_decryptor_saved_password';
+const video=document.getElementById('video');
+let stream=null, scanActive=false;
+
+function savePassword(p){localStorage.setItem(STORAGE_KEY,p);}
+function loadSavedPassword(){return localStorage.getItem(STORAGE_KEY);}
+function forgetSavedPassword(){localStorage.removeItem(STORAGE_KEY);}
+
+function b64_to_u8(b){
+  const bin=atob(b), a=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++) a[i]=bin.charCodeAt(i);
+  return a;
+}
+
+async function deriveKey(p,s){
+  const enc=new TextEncoder();
+  const base=await crypto.subtle.importKey('raw',enc.encode(p),{name:'PBKDF2'},false,['deriveKey']);
+  return crypto.subtle.deriveKey(
+    {name:'PBKDF2',salt:s,iterations:200000,hash:'SHA-256'},
+    base,{name:'AES-GCM',length:256},false,['decrypt']
+  );
+}
+
+async function decryptFromQR(qrData,pwd){
+  try{
+    const o=JSON.parse(qrData);
+    const key=await deriveKey(pwd,b64_to_u8(o.salt));
+    const pt=await crypto.subtle.decrypt(
+      {name:'AES-GCM',iv:b64_to_u8(o.iv)},
+      key,b64_to_u8(o.ct)
+    );
+    const code=new TextDecoder().decode(pt).split('|')[0];
+    document.getElementById('pinDisplay').textContent=code;
+    document.getElementById('status').textContent='PIN çözüldü.';
+  }catch{
+    document.getElementById('pinDisplay').textContent='---';
+    document.getElementById('status').textContent='Decrypt başarısız.';
+  }
+}
+
+async function startCamera(){
+  if(scanActive) return;
+  document.getElementById('status').textContent='Kamera açılıyor...';
+  stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
+  video.srcObject=stream;
+  await video.play();
+  scanActive=true;
+  startBtn.disabled=true;
+  stopBtn.disabled=false;
+  scanLoop();
+}
+
+function stopCamera(){
+  if(stream) stream.getTracks().forEach(t=>t.stop());
+  scanActive=false;
+  startBtn.disabled=false;
+  stopBtn.disabled=true;
+}
+
+function scanLoop(){
+  const c=document.createElement('canvas');
+  const x=c.getContext('2d');
+  const loop=()=>{
+    if(!scanActive) return;
+    if(video.readyState===video.HAVE_ENOUGH_DATA){
+      c.width=video.videoWidth;
+      c.height=video.videoHeight;
+      x.drawImage(video,0,0);
+      const d=x.getImageData(0,0,c.width,c.height);
+      const qr=jsQR(d.data,d.width,d.height);
+      if(qr){
+        const pwd=loadSavedPassword()||pwdInput.value;
+        if(pwd) decryptFromQR(qr.data,pwd);
+        stopCamera();
+        return;
+      }
+    }
+    requestAnimationFrame(loop);
+  };
+  loop();
+}
+
+const startBtn=document.getElementById('startBtn');
+const stopBtn=document.getElementById('stopBtn');
+const pwdInput=document.getElementById('pwd');
+
+startBtn.onclick=startCamera;
+stopBtn.onclick=stopCamera;
+
+document.getElementById('forget').onclick=()=>{
+  forgetSavedPassword();
+  pwdInput.value='';
+  document.getElementById('status').textContent='Şifre silindi.';
+};
+
+window.onload=()=>{
+  const s=loadSavedPassword();
+  if(s){ pwdInput.value=s; document.getElementById('remember').checked=true; }
+  startCamera().catch(()=>{});
+};
+</script>
+</body>
+</html>
