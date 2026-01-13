@@ -22,6 +22,12 @@ Aşağıda bu repo içinde bulunan ve Netlify’da çalışan projeler yer almak
 
 > 🔔 Liste zamanla güncellenebilir.
 
+## 📜 Lisans
+
+Bu projeler eğitim ve demo amaçlıdır.  
+İsteyen kaynak göstererek kullanabilir.
+
+
 ---
 
 ## 📁 Repo Yapısı
