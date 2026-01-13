@@ -1,4 +1,3 @@
-# My Netlify SitesApps
 # 🌐 My Netlify Sites & Apps
 
 Bu repo, Netlify üzerinde yayınladığım HTML / CSS / JavaScript tabanlı küçük web uygulamaları ve demo projelerini içerir.
