@@ -18,14 +18,14 @@ Aşağıda bu repo içinde bulunan ve Netlify’da çalışan projeler yer almak
   👉 Canlı Demo: https://muzikkontrol.netlify.app/ 
 
 
-
 > 🔔 Liste zamanla güncellenebilir.
+
+---
 
 ## 📜 Lisans
 
 Bu projeler eğitim ve demo amaçlıdır.  
 İsteyen kaynak göstererek kullanabilir.
-
 
 ---
 
