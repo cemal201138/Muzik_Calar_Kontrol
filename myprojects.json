@@ -1,42 +1,13 @@
 [
   {
     "project": "Python_Muzik_Calar",
-    "version": "V14",
-    "stars": 1,
+    "version": "n/a",
+    "stars": 0,
     "forks": 0,
-    "source_zip": "https://github.com/devcemalevli38/Python_Muzik_Calar/archive/refs/tags/V14.zip",
-    "source_tar": "https://github.com/devcemalevli38/Python_Muzik_Calar/archive/refs/tags/V14.tar.gz",
-    "updated_at": "2026-03-05T14:57:14Z",
-    "downloadable_files": [
-      {
-        "file_name": "5000_port_delete.vbs",
-        "download_url": "https://github.com/devcemalevli38/Python_Muzik_Calar/releases/download/V14/5000_port_delete.vbs"
-      },
-      {
-        "file_name": "5000_port_new.vbs",
-        "download_url": "https://github.com/devcemalevli38/Python_Muzik_Calar/releases/download/V14/5000_port_new.vbs"
-      },
-      {
-        "file_name": "app_icon.ico",
-        "download_url": "https://github.com/devcemalevli38/Python_Muzik_Calar/releases/download/V14/app_icon.ico"
-      },
-      {
-        "file_name": "muzikcalarV14.apk",
-        "download_url": "https://github.com/devcemalevli38/Python_Muzik_Calar/releases/download/V14/muzikcalarV14.apk"
-      },
-      {
-        "file_name": "muzikcalarV14.exe",
-        "download_url": "https://github.com/devcemalevli38/Python_Muzik_Calar/releases/download/V14/muzikcalarV14.exe"
-      },
-      {
-        "file_name": "muzikcalarV14.py",
-        "download_url": "https://github.com/devcemalevli38/Python_Muzik_Calar/releases/download/V14/muzikcalarV14.py"
-      },
-      {
-        "file_name": "Python_Muzik_CalarV14.zip",
-        "download_url": "https://github.com/devcemalevli38/Python_Muzik_Calar/releases/download/V14/Python_Muzik_CalarV14.zip"
-      }
-    ]
+    "source_zip": "https://github.com/devcemalevli38/Python_Muzik_Calar/archive/refs/tags/n/a.zip",
+    "source_tar": "https://github.com/devcemalevli38/Python_Muzik_Calar/archive/refs/tags/n/a.tar.gz",
+    "updated_at": "n/a",
+    "downloadable_files": []
   },
   {
     "project": "Python-Hand-Mouse",
