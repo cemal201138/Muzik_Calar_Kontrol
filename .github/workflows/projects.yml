@@ -22,7 +22,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           USER="devcemalevli38"
-          REPOS=("TelePlay" "Python-Hand-Mouse" "Python_Lock_App" "Mottoverse")
+          REPOS=("TelePlay" "Mottoverse")
           
           echo "[]" > myprojects.json
 
