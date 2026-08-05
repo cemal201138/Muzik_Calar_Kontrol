@@ -1,40 +1,44 @@
 [
   {
     "project": "TelePlay",
-    "version": "V14",
+    "version": "V15",
     "stars": 1,
     "forks": 0,
-    "source_zip": "https://github.com/devcemalevli38/TelePlay/archive/refs/tags/V14.zip",
-    "source_tar": "https://github.com/devcemalevli38/TelePlay/archive/refs/tags/V14.tar.gz",
-    "updated_at": "2026-03-05T14:57:14Z",
+    "source_zip": "https://github.com/devcemalevli38/TelePlay/archive/refs/tags/V15.zip",
+    "source_tar": "https://github.com/devcemalevli38/TelePlay/archive/refs/tags/V15.tar.gz",
+    "updated_at": "2026-08-05T12:48:00Z",
     "downloadable_files": [
       {
         "file_name": "5000_port_delete.vbs",
-        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V14/5000_port_delete.vbs"
+        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V15/5000_port_delete.vbs"
       },
       {
         "file_name": "5000_port_new.vbs",
-        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V14/5000_port_new.vbs"
+        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V15/5000_port_new.vbs"
       },
       {
         "file_name": "app_icon.ico",
-        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V14/app_icon.ico"
+        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V15/app_icon.ico"
       },
       {
-        "file_name": "TelePlayV14.apk",
-        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V14/TelePlayV14.apk"
+        "file_name": "app_icon.png",
+        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V15/app_icon.png"
       },
       {
-        "file_name": "TelePlayV14.exe",
-        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V14/TelePlayV14.exe"
+        "file_name": "TelePlayV15.apk",
+        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V15/TelePlayV15.apk"
       },
       {
-        "file_name": "TelePlayV14.py",
-        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V14/TelePlayV14.py"
+        "file_name": "TelePlayV15.exe",
+        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V15/TelePlayV15.exe"
       },
       {
-        "file_name": "TelePlayV14.zip",
-        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V14/TelePlayV14.zip"
+        "file_name": "TelePlayV15.py",
+        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V15/TelePlayV15.py"
+      },
+      {
+        "file_name": "TelePlayV15.zip",
+        "download_url": "https://github.com/devcemalevli38/TelePlay/releases/download/V15/TelePlayV15.zip"
       }
     ]
   },
